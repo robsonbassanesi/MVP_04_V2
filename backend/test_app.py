@@ -59,7 +59,7 @@ def test_predict_endpoint(client):
     assert 'resultado' in response.json
 
 
-url_dados = "database/cancer_data.csv"
+url_dados = "database/cancer_golden.csv"
 colunas = ['diagnosis', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean',
            'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave_points_mean',
            'symmetry_mean', 'fractal_dimension_mean', 'radius_se', 'texture_se',
@@ -67,23 +67,17 @@ colunas = ['diagnosis', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_m
            'concavity_se', 'concave_points_se', 'symmetry_se', 'fractal_dimension_se',
            'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst',
            'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave_points_worst',
-           'symmetry_worst', 'fractal_dimension_worst', ]
+           'symmetry_worst', 'fractal_dimension_worst']
 
 # Carga dos dados
 dataset = carregador.carregar_dados(url_dados, colunas)
 
-label_mapping = {'M': 1, 'B': 0}
-dataset['diagnosis'] = dataset['diagnosis'].map(label_mapping)
+dataset['diagnosis'] = dataset['diagnosis'].map({'M': 1, 'B': 0})
 
 # 2. Selecione os recursos (X) e os rótulos (Y)
 X = dataset.iloc[:, 0:-1]
-
 # Se a coluna 'label' estiver na última posição, você pode fazer
-try:
-    Y = dataset.iloc[:, -1]
-except KeyError:
-    # Se a coluna 'label' não estiver presente, ajuste o código para selecionar a última coluna
-    Y = dataset.iloc[:, -1]
+Y = dataset.iloc[:, 0]
 
 
 def test_modelo_knn():
