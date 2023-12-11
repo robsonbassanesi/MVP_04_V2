@@ -7,3 +7,7 @@
 Link para o vídeo de apresentação.
 
 https://youtu.be/sNgrtOPjoss
+
+link para o google colab.
+
+https://colab.research.google.com/drive/1VzjthKbjjpR57OmoAdh15Y_Qz7Kyfqm0
